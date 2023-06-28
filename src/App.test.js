@@ -1,5 +1,4 @@
-import { add } from './App';
-
+import { add, total } from './App';
 
 // ***** SAMPLE TEST *****
 
@@ -40,7 +39,18 @@ test('add', () => {
 
 // ***** END UNIT TEST *****
 
+// ***** INTEGRATION TEST *****
+
+// Defining an integration test (again):
+    // testing a function that relies on another function
+    // or in React: testing a component that renders another component
+
+test('total', () => {
+    expect(total(5,20)).toBe("$25");
+})
+
+// NOTE: total() relies on add() to function correctly
+    // therefore this tests both add() and total()
 
 
-
-
+// ***** END INTEGRATION TEST *****
