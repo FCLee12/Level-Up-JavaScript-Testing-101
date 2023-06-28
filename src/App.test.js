@@ -54,3 +54,30 @@ test('total', () => {
 
 
 // ***** END INTEGRATION TEST *****
+
+// ***** MOCK FUNCTIONS *****
+
+// this is a mock function
+    // the purpose is to create a fake function
+    // that will give you some results
+    // can be async, can return a promise, or data
+    // can even load a function from a dependency and turn it into a mock
+        // EX: Database call, but I don't actually want it to hit the database
+            // you can load the function, turn it into a mock, and then determine
+            // whether or not the function is ever run
+
+const returnsOne = jest.fn(() => 1);
+const minus = jest.fn((x, y) => x - y);
+
+test('returnsOne', () => {
+    expect(returnsOne()).toBe(1);
+    expect(returnsOne).toHaveBeenCalledTimes(1);
+})
+
+test('minus', () => {
+    expect(minus(3,2)).toBe(1);
+    expect(minus).toHaveBeenCalledTimes(1);
+    expect(minus).toHaveBeenCalledWith(3,2);
+})
+
+// ***** END MOCK FUNCTIONS *****
