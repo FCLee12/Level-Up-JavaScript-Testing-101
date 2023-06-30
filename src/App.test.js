@@ -108,13 +108,19 @@ test('total', () => {
 
     // This verifies that the "add" function was run
         // within the "total" function
+        // *** NOTE: a "spy", in this case "add", that allows us to see if
+            // the function was called ***
     expect(add).toHaveBeenCalledTimes(1);
+
+    // *** NOTE: THE FOLLOWING IS REDUDANT,
+        // IN THE REAL WORLD YOU WOULD NOT REPEAT THE ABOVE TEST AGAIN LIKE BELOW ***
 
     // This adjusts the mocked "add" function to return 30 instead of 25
     add.mockImplementation(() => 30);
 
     expect(total(5, 25)).toBe('$30');
     expect(add).toHaveBeenCalledTimes(2);
+    // *** END REDUDANT PART ***
 });
 
 // ***** END MOCKING MODULES *****
