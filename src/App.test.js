@@ -1,4 +1,5 @@
-import { add, total } from './App';
+import { total } from './App';
+import { add } from './add';
 
 // ***** SAMPLE TEST *****
 
@@ -20,15 +21,17 @@ import { add, total } from './App';
 
 // ***** UNIT TEST *****
 
-test('add', () => {
-    const value = add(1, 2);
-    // we expect (assert) variable value to be 3
-    expect(value).toBe(3);
+// *** NOTE: active version of this test has been moved to add.test.js ***
 
-    // alt:
-    expect(add(1,2)).toBe(3);
-    expect(add(5,2)).toBe(7);
-})
+// test('add', () => {
+//     const value = add(1, 2);
+//     // we expect (assert) variable value to be 3
+//     expect(value).toBe(3);
+
+//     // alt:
+//     expect(add(1,2)).toBe(3);
+//     expect(add(5,2)).toBe(7);
+// })
 
     // Unit Tests:
         // only tests one thing
@@ -45,9 +48,11 @@ test('add', () => {
     // testing a function that relies on another function
     // or in React: testing a component that renders another component
 
-test('total', () => {
-    expect(total(5,20)).toBe("$25");
-})
+// *** NOTE: active version of this test has been moved to MOCKING MODULES Section ***
+
+// test('total', () => {
+//     expect(total(5,20)).toBe("$25");
+// })
 
 // NOTE: total() relies on add() to function correctly
     // therefore this tests both add() and total()
@@ -81,3 +86,35 @@ test('minus', () => {
 })
 
 // ***** END MOCK FUNCTIONS *****
+
+// ***** MOCKING MODULES *****
+
+// a mocked dependency
+    // mocked the location './add'
+    // used the arrow function returning an object is used to say
+        // there is a module called 'add' (Note object property name is 'add')
+    // we're defining it as a mock function that returns 25
+jest.mock('./add', () => ({
+    add: jest.fn(() => 25)
+}));
+
+test('total', () => {
+    // This utilizes the mocked "add" function instead of the actual one
+        // that is imported from add.js
+        // EX: if this were an API call, rather than testing some other
+            // company's API code, you're basically throwing in a mock
+            // function so the larger/dependant function can still be tested
+    expect(total(5,20)).toBe("$25");
+
+    // This verifies that the "add" function was run
+        // within the "total" function
+    expect(add).toHaveBeenCalledTimes(1);
+
+    // This adjusts the mocked "add" function to return 30 instead of 25
+    add.mockImplementation(() => 30);
+
+    expect(total(5, 25)).toBe('$30');
+    expect(add).toHaveBeenCalledTimes(2);
+});
+
+// ***** END MOCKING MODULES *****
